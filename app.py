@@ -1,33 +1,34 @@
 # =========================================================================
-# FORCED-RUNTIME COMPATIBLE CODE: REMOVES PIP CONFIGURATION ERRORS
+# STANDARD SYSTEM PRODUCTION GATEWAY: GRAPHICS RUNTIME COMPATIBILITY FIX
 # =========================================================================
-import subprocess
+import os
 import sys
+import subprocess
 
-# Forcibly injection of headless OpenCV package before execution layers boot up
-try:
-    import cv2
-except ImportError:
-    subprocess.check_call([sys.executable, "-m", "pip", "install", "opencv-python-headless"])
-    import cv2
+# Secure framework installer step to initialize modules directly on runtime cluster
+def secure_subsystem_boot():
+    required_packages = {
+        "cv2": "opencv-python-headless",
+        "streamlit_webrtc": "streamlit-webrtc",
+        "ultralytics": "ultralytics"
+    }
+    for module_name, package_target in required_packages.items():
+        try:
+            __import__(module_name)
+        except ImportError:
+            subprocess.check_call([sys.executable, "-m", "pip", "install", package_target, "--no-cache-dir"])
 
-try:
-    from streamlit_webrtc import webrtc_streamer, VideoProcessorBase
-except ImportError:
-    subprocess.check_call([sys.executable, "-m", "pip", "install", "streamlit-webrtc"])
-    from streamlit_webrtc import webrtc_streamer, VideoProcessorBase
+# Run initial execution mapping setup safely
+secure_subsystem_boot()
 
-try:
-    from ultralytics import YOLO
-except ImportError:
-    subprocess.check_call([sys.executable, "-m", "pip", "install", "ultralytics"])
-    from ultralytics import YOLO
-
+import cv2
 import streamlit as st
 import numpy as np
+from ultralytics import YOLO
+from streamlit_webrtc import webrtc_streamer, VideoProcessorBase
 
-# Interface Setup configuration layout optimization matrix
-st.set_page_config(page_title="Ultra 3D Classifier", layout="wide")
+# Setup dashboard architecture layouts
+st.set_page_config(page_title="Ultra 3D Engine", layout="wide")
 st.title("🤖 Ultra Pro 3D Mesh Engine & Decision Tree Classifier")
 st.write("Live webcam object tracking and recognition with simulated 3D vector space graphics.")
 
@@ -75,12 +76,10 @@ class Isometric3DGraphicsProcessor(VideoProcessorBase):
                 box_height = y_end - y_start
                 depth_offset = int(min(box_width, box_height) * 0.25)
                 
-                # Coordinates calculations for multi-plane mapping
                 pt1_f, pt2_f = (x_start, y_start), (x_end, y_end)
                 pt1_b = (x_start + depth_offset, y_start - depth_offset)
                 pt2_b = (x_end + depth_offset, y_end - depth_offset)
                 
-                # Render Simulated Geometry planes (Neon Cyan Mesh grid style)
                 cv2.rectangle(video_frame, pt1_b, pt2_b, (180, 105, 50), 1)
                 cv2.line(video_frame, pt1_f, pt1_b, (255, 255, 0), 2)
                 cv2.line(video_frame, (x_end, y_start), (x_end + depth_offset, y_start - depth_offset), (255, 255, 0), 2)
